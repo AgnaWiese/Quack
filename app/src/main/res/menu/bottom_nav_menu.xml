@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_lake"
+        android:icon="@drawable/ic_outline_broadcast_on_personal_24"
+        android:title="@string/title_lake" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_outline_person_24"
+        android:title="@string/title_profile" />
+
+    <item
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/ic_baseline_more_horiz_24"
+        android:title="@string/title_more" />
+
+</menu>

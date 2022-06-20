@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Quack!</string>
+    <string name="title_profile">Nest</string>
+    <string name="title_lake">Lake</string>
+    <string name="people_nearby">People nearby</string>
+    <string name="your_profile">Your profile</string>
+    <string name="title_more">More</string>
+    <string name="title_contact_details">Contact details</string>
+    <string name="about_quack">About Quack!</string>
+    <string name="about_quack_message">by Eugeniya Trushkina\n© 2022, all rights reserved\n\nVersion 1.0.0</string>
+    <string name="view_source_code">View the source code</string>
+    <string name="broadcast_profile">Broadcast your profile</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="phone_number">Phone</string>
+    <string name="telegram">Telegram</string>
+    <string name="organization">Organization</string>
+    <string name="job_title">Job title</string>
+    <string name="vkontakte">VKontakte</string>
+    <string name="web_page">Web page</string>
+    <string name="save">Save</string>
+    <string name="saved_profile">Saved profile</string>
+    <string name="error_loading_profile">Error loading profile</string>
+    <string name="error_saving_profile">Error saving profile</string>
+    <string name="error_invalid_profile_input">First name should be specified</string>
+    <string name="required_parameter">Required parameter</string>
+    <string name="share">Share</string>
+    <string name="hint_required">*required</string>
+    <string name="error_broadcasting">Oops… Something went wrong with profile broadcasting</string>
+    <string name="error_scanning">Oops… Something went wrong with BLE scanning</string>
+    <string name="error_profile_is_not_set">Please setup your Profile first</string>
+    <string name="no_quack_quack_so_far">Searching for quack-quack…</string>
+    <string name="alert_profile_creation">Profile creation</string>
+    <string name="alert_profile_creation_msg">Let\'s set up your profile for broadcasting!\nIt does not take a lot of time :)</string>
+    <string name="alert_lets_go">Let\'s go</string>
+    <string name="alert_no_perm">We are sorry</string>
+    <string name="alert_no_perm_msg">But network proximity via bluetooth low energy, which is using for scanning, is not available as it needs requested permissions.</string>
+    <string name="alert_no_perm_broadcasting_msg">But profile broadcasting via bluetooth low energy is not available as it needs requested permissions.</string>
+    <string name="grant_permission">Grant permission</string>
+    <string name="grant_scan_perm_rationale_ble">Please grant BluetoothLE permissions\nto scan contacts nearby</string>
+    <string name="grant_scan_perm_rationale_location">Please grant location permissions\nto scan contacts nearby</string>
+
+    <string name="url_project_github" translatable="false">https://github.com/AgnaWiese/Quack</string>
+    <string name="ble_service_uuid" translatable="false">0DD0642A-D822-4DF5-AC1E-BCA17263F97D</string>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/mobile_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_lake">
+
+    <fragment
+        android:id="@+id/navigation_lake"
+        android:name="ru.trushkina.quack.presentation.lake.LakeFragment"
+        android:label="@string/title_lake"
+        tools:layout="@layout/fragment_lake">
+        <action
+            android:id="@+id/action_open_contact"
+            app:destination="@id/navigation_contact_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="ru.trushkina.quack.presentation.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_more"
+        android:name="ru.trushkina.quack.presentation.more.MoreFragment"
+        android:label="@string/title_more"
+        tools:layout="@layout/fragment_more" />
+
+    <fragment
+        android:id="@+id/navigation_contact_details"
+        android:name="ru.trushkina.quack.presentation.lake.ContactDetailsFragment"
+        android:label="@string/title_contact_details"
+        tools:layout="@layout/fragment_contact_details">
+        <argument
+            android:name="contact"
+            app:argType="ru.trushkina.quack.domain.models.Contact"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+</navigation>
