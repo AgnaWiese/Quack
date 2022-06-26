@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.trushkina.quack.domain.exceptions.BLENotAvailableException
 import ru.trushkina.quack.domain.exceptions.ProfileIsNotSetException
 import ru.trushkina.quack.domain.proximity.interactors.IProximityInteractor
 import ru.trushkina.quack.domain.models.Contact
@@ -56,6 +57,13 @@ class LakeViewModel @Inject constructor(
                             scannedContacts =  contacts
                         )
                     }
+                }
+            } catch (e: BLENotAvailableException) {
+                Log.e("LakeViewModel", e.message ?: "")
+                _uiScanState.update {
+                    it.copy(
+                        isBLENotAvailableError = true
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("LakeViewModel", e.message ?: "")
@@ -101,6 +109,13 @@ class LakeViewModel @Inject constructor(
                         profileIsNotSet = true
                     )
                 }
+            } catch (e: BLENotAvailableException) {
+                Log.e("LakeViewModel", e.message ?: "")
+                _uiBroadcastingState.update {
+                    it.copy(
+                        isBLENotAvailableError = true
+                    )
+                }
             } catch (e: Exception) {
                 Log.e("LakeViewModel", e.message ?: "")
                 _uiBroadcastingState.update {
@@ -115,11 +130,13 @@ class LakeViewModel @Inject constructor(
     fun userMessageShown() {
         _uiScanState.update {
             it.copy(
+                isBLENotAvailableError = false,
                 isScanningError = false
             )
         }
         _uiBroadcastingState.update {
             it.copy(
+                isBLENotAvailableError = false,
                 profileIsNotSet = false,
                 isBroadcastingError = false
             )
@@ -128,11 +145,13 @@ class LakeViewModel @Inject constructor(
 }
 
 data class ScanContactsUiState(
+    val isBLENotAvailableError: Boolean = false,
     val isScanningError: Boolean = false,
     val scannedContacts: List<Contact> = emptyList()
 )
 
 data class BroadcastingUiState(
+    val isBLENotAvailableError: Boolean = false,
     val profileIsNotSet: Boolean = false,
     val isBroadcastingError: Boolean = false,
     val isBroadcastingSwitchEnabled: Boolean = false

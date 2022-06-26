@@ -61,7 +61,7 @@ class LakeFragment : Fragment() {
                     lakeViewModel.startContactsScan()
                     launchScanFlow()
                 }
-                else -> showNoPermissionDialog(R.string.alert_no_perm_msg)
+                else -> showNoPermissionAlert(R.string.alert_no_perm_msg)
             }
         }
 
@@ -71,7 +71,7 @@ class LakeFragment : Fragment() {
         ) { isGranted: Boolean ->
             when {
                 isGranted -> lakeViewModel.switchBroadcastingState(true)
-                else -> showNoPermissionDialog(R.string.alert_no_perm_broadcasting_msg)
+                else -> showNoPermissionAlert(R.string.alert_no_perm_broadcasting_msg)
             }
         }
 
@@ -240,6 +240,9 @@ class LakeFragment : Fragment() {
                     }
 
                     when {
+                        it.isBLENotAvailableError -> {
+                            showBleIsNotAvailableAlert()
+                        }
                         it.isScanningError -> {
                             showSnackBar(R.string.error_scanning)
                         }
@@ -260,6 +263,9 @@ class LakeFragment : Fragment() {
                         it.profileIsNotSet -> {
                             showProfileSetAlert()
                         }
+                        it.isBLENotAvailableError -> {
+                            showBleIsNotAvailableAlert()
+                        }
                         it.isBroadcastingError -> {
                             binding.switchBroadcasting.isChecked = false
                             showSnackBar(R.string.error_broadcasting)
@@ -270,7 +276,7 @@ class LakeFragment : Fragment() {
         }
     }
 
-    private fun showNoPermissionDialog(@StringRes messageId: Int) {
+    private fun showNoPermissionAlert(@StringRes messageId: Int) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.alert_no_perm)
             .setMessage(messageId)
@@ -278,5 +284,16 @@ class LakeFragment : Fragment() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun showBleIsNotAvailableAlert() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.bluetooth_is_not_available)
+            .setMessage(R.string.bluetooth_is_not_available_desc)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+        lakeViewModel.userMessageShown()
     }
 }

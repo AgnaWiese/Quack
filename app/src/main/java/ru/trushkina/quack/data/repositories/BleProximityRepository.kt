@@ -16,6 +16,7 @@
 package ru.trushkina.quack.data.repositories
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothManager
 import android.bluetooth.le.*
 import android.content.SharedPreferences
 import android.util.Log
@@ -27,6 +28,7 @@ import ru.trushkina.quack.data.datasources.IUuidBleServiceHolder
 import ru.trushkina.quack.data.mappers.IBleContactMapper
 import ru.trushkina.quack.data.models.BleContactModel
 import ru.trushkina.quack.data.models.BleContactPartModel
+import ru.trushkina.quack.domain.exceptions.BLENotAvailableException
 import ru.trushkina.quack.domain.models.Contact
 import ru.trushkina.quack.domain.proximity.repositories.IProximityRepository
 import java.lang.StringBuilder
@@ -48,9 +50,8 @@ class BleProximityRepository(
     private val sharedPreferences: SharedPreferences,
     private val gson: Gson,
     private val bleContactMapper: IBleContactMapper,
-    private val bluetoothLeAdvertiser: BluetoothLeAdvertiser,
+    private val bluetoothManager: BluetoothManager,
     private val advertiseSettings: AdvertiseSettings,
-    private val bluetoothLeScanner: BluetoothLeScanner,
     private val bluetoothLeScanSettings: ScanSettings,
     private val uuidBleServiceHolder: IUuidBleServiceHolder
 ) : IProximityRepository {
@@ -116,6 +117,13 @@ class BleProximityRepository(
     @SuppressLint("MissingPermission")
     override suspend fun startContactsScan() {
         withContext(ioDispatcher) {
+            val bluetoothAdapter = bluetoothManager?.adapter
+            val bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
+            if (bluetoothLeScanner == null || !bluetoothAdapter.isEnabled)  {
+                Log.e("BleProximityRepository", "bluetoothLeScanner is not available")
+                throw BLENotAvailableException()
+            }
+
             val filter = ScanFilter.Builder()
                 .setServiceData(uuidBleServiceHolder.getUuid(), null)
                 .build()
@@ -128,8 +136,7 @@ class BleProximityRepository(
     @SuppressLint("MissingPermission")
     override suspend fun stopContactsScan() {
         withContext(ioDispatcher) {
-//            protocolCache.clear()
-            bluetoothLeScanner.stopScan(scanCallback)
+            bluetoothManager?.adapter?.bluetoothLeScanner?.stopScan(scanCallback)
             Log.d("BleProximityRepository", "stopContactsScan")
         }
     }
@@ -147,6 +154,12 @@ class BleProximityRepository(
         withContext(ioDispatcher) {
             if (isContactBroadcastingStarted()) {
                 return@withContext
+            }
+
+            val bluetoothLeAdvertiser = bluetoothManager?.adapter?.bluetoothLeAdvertiser
+            if (bluetoothLeAdvertiser == null) {
+                Log.e("BleProximityRepository", "bluetoothLeAdvertiser is not available")
+                throw BLENotAvailableException()
             }
 
             sharedPreferences.edit().putBoolean(SP_BROADCAST_STARTED_KEY, true).apply()
@@ -196,12 +209,13 @@ class BleProximityRepository(
 
 
     @SuppressLint("MissingPermission")
-    override suspend fun stopContactBroadcasting() =
+    override suspend fun stopContactBroadcasting() {
         withContext(ioDispatcher) {
             sharedPreferences.edit().putBoolean(SP_BROADCAST_STARTED_KEY, false).apply()
             isBroadcastingTurnedOn = false
-            bluetoothLeAdvertiser.stopAdvertising(object : AdvertiseCallback() {})
+            bluetoothManager?.adapter?.bluetoothLeAdvertiser?.stopAdvertising(object : AdvertiseCallback() {})
         }
+    }
 
     override suspend fun isContactBroadcastingStarted(): Boolean =
         withContext(ioDispatcher) {

@@ -17,8 +17,6 @@ package ru.trushkina.quack.di
 
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.AdvertiseSettings
-import android.bluetooth.le.BluetoothLeAdvertiser
-import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.SharedPreferences
@@ -62,8 +60,8 @@ class ProximityModule {
 
     @Provides
     @Singleton
-    fun provideBluetoothLeScanner(@ApplicationContext context: Context): BluetoothLeScanner =
-        (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter.bluetoothLeScanner
+    fun provideBluetoothManager(@ApplicationContext context: Context): BluetoothManager =
+        context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
     @Provides
     @Singleton
@@ -76,19 +74,13 @@ class ProximityModule {
 
     @Provides
     @Singleton
-    fun provideBluetoothLeAdvertiser(@ApplicationContext context: Context): BluetoothLeAdvertiser =
-        (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter.bluetoothLeAdvertiser
-
-    @Provides
-    @Singleton
     fun provideProximityRepository(
         ioDispatcher: CoroutineDispatcher,
         sharedPreferences: SharedPreferences,
         gson: Gson,
         bleContactMapper: IBleContactMapper,
-        bluetoothLeAdvertiser: BluetoothLeAdvertiser,
+        bluetoothManager: BluetoothManager,
         advertiseSettings: AdvertiseSettings,
-        bluetoothLeScanner: BluetoothLeScanner,
         bluetoothLeScanSettings: ScanSettings,
         uuidBleServiceHolder: IUuidBleServiceHolder
     ): IProximityRepository = BleProximityRepository(
@@ -96,9 +88,8 @@ class ProximityModule {
         sharedPreferences,
         gson,
         bleContactMapper,
-        bluetoothLeAdvertiser,
+        bluetoothManager,
         advertiseSettings,
-        bluetoothLeScanner,
         bluetoothLeScanSettings,
         uuidBleServiceHolder
     )

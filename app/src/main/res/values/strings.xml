@@ -7,7 +7,7 @@
     <string name="title_more">More</string>
     <string name="title_contact_details">Contact details</string>
     <string name="about_quack">About Quack!</string>
-    <string name="about_quack_message">by Eugeniya Trushkina\n© 2022, all rights reserved\n\nVersion 1.0.0</string>
+    <string name="about_quack_message">by Eugeniya Trushkina\n© 2022, all rights reserved\n\nVersion 1.0.1</string>
     <string name="view_source_code">View the source code</string>
     <string name="broadcast_profile">Broadcast your profile</string>
     <string name="first_name">First name</string>
@@ -39,6 +39,8 @@
     <string name="grant_permission">Grant permission</string>
     <string name="grant_scan_perm_rationale_ble">Please grant BluetoothLE permissions\nto scan contacts nearby</string>
     <string name="grant_scan_perm_rationale_location">Please grant location permissions\nto scan contacts nearby</string>
+    <string name="bluetooth_is_not_available">Bluetooth is not available</string>
+    <string name="bluetooth_is_not_available_desc">Please turn on the Bluetooth in device settings</string>
 
     <string name="url_project_github" translatable="false">https://github.com/AgnaWiese/Quack</string>
     <string name="ble_service_uuid" translatable="false">0DD0642A-D822-4DF5-AC1E-BCA17263F97D</string>
