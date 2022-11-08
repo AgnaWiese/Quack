@@ -2,6 +2,8 @@
 
 A Network Proximity app that allows to find contacts directly via Bluetooth Low Energy without any backend, Internet or established Bluetooth/Wi-fi Direct connection.
 
+Get it on Google Play: https://play.google.com/store/apps/details?id=ru.trushkina.quack
+
 Key features:
 * Find contacts nearby
 * Share you profile
