@@ -3,10 +3,10 @@
 A Network Proximity app that allows to find contacts directly via Bluetooth Low Energy without any backend, Internet or established Bluetooth/Wi-fi Direct connection.
 
 Key features:
-– Find contacts nearby 
-– Share you profile 
-– All user data transmits directly to another devices via BLE Advertising without any backend, Internet or established connection 
-– Friendly Quack-quack User Interface inspired by Material Design 3
+* Find contacts nearby
+* Share you profile
+* All user data transmits directly to another devices via BLE Advertising without any backend, Internet or established connection 
+* Friendly Quack-quack User Interface inspired by Material Design 3
 
 Quack! is a graduation qualification project in the faculty of Computational Mathematics and Cybernetics of Lomonosov Moscow State University
 
